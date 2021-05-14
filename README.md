@@ -58,6 +58,7 @@
 * matplotlib
 * scikit-learn
 * streamlit
+
 ![image](https://user-images.githubusercontent.com/84164707/118298422-a4412d00-b509-11eb-8abd-4f0441a00c88.png)
 ![image](https://user-images.githubusercontent.com/84164707/118298436-a86d4a80-b509-11eb-9b66-792f926e37bd.png)
 
