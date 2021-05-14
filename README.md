@@ -2,7 +2,6 @@
 ## 1. Tóm tắt đề tài
 * Đưa ra một sản phẩm nhận vào hình ảnh nốt ruồi, xem xét và dự đoán nốt ruồi có ác tính không
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
-
   + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
   + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
@@ -14,9 +13,9 @@
 * Experiment: những hình ảnh nốt ruồi cùng với dự đoán 
 * Function space: 
 * Performance: AUC, ROC, hàm loss là focal crossentropy
-* Algorithm: 
+* Algorithm: áp dụng và train lại toàn bộ các pretrained models như AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50. Đồng thời nhóm ensemble các models này lại bằng phương pháp weighted average ensemble, và áp dụng Deep Stack để tìm ra weight cụ thể cho từng model
 ### 2.2. Data
-* Smaple:
+* Sample:
   * benign mole
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
   * malign mole
@@ -28,38 +27,40 @@
   + InceptionV3
   + ResNet50
   + AlexNet (modified)
-* Lý do: dựa vào một số bài báo nghiên cứu để có được kết quả cao
-### 2.4. Tiền xử lý dự liệu
-* Do dataset bị imbalanced cao nên tụi em đã gom toàn bộ ảnh malign lại
-* Dùng ImageDataGenerator thành 256x256x3
-* Image resizing: Transform images to 224x224x3
+* Lý do: dựa vào một số bài báo nghiên cứu để có được kết quả cao, đồng thời đây cũng là những models thường được đưa ra nghiên cứu
+### 2.4. Tiền xử lý dữ liệu
+* Do dataset bị imbalanced cao nên tụi em đã gom toàn bộ ảnh malignant lại
+* Nhóm chúng em áp dụng xáo trộn file csv lại , sau đó chọn 4000 bức ảnh benign đàu tiên + 500 bức ảnh malignant làm tập train ; 500 bức ảnh benign tiếp theo và các ảnh malignant còn lại làm tập validation
+* Nhóm chúng em dùng các hàm flow_from_dataframe cùng với Imaga Data Generator để dán nhãn cho ảnh (có được từ file csv ở trên)
+* Dùng ImageDataGenerator resize lại ảnh thành 256x256x3, đồng thời áp dụng các phương pháp data augmentation khác như shearing, flipping,...
 ## 3. Pre-trained model
+* Tóm tắt chung: nhìn chung chúng em đều xây dựng các pretrained models với cấu trúc : Base + Global Average Pooling + Dense layer (là lớp Prediction, output chỉ có 1 node). Đồng thời chúng em còn áp dụng những kĩ thuật sau trong training để nâng cao hiệu suất cũng như độ chính xác của các model:
+  + Dùng class weights (computed từ sklearn) để áp dụng cho từng class trong traning {0:0.5,
+                                                                                      1:4.0)
+  + Dùng Data Augmentation trong bước chuẩn bị để nâng cao hiệu suất models
+  + Dùng Sigmoid Focal Crossentropy là hàm loss (có trong tensorflow-addons). Hàm loss này đã được chứng minh là rất hiệu quả trong việc xử lý những bộ file dataset ảnh có tính imbalanced cao, cơ bản vì hàm này ép các models phải học những đặc trưng khác trong ảnh, không được chỉ tập trung vào 1 hay 1 vài features đơn lẻ
+  + Dùng thang đo ROC-AUC làm metrics, vì đây là thang đo mang tính khách quan và chính xác hơn đối với những file dataset có đô imbalanced cao
+  + Ngoài ra, trong lúc training, chúng em còn áp dụng workers, use_multiprocessing để tăng tốc độ trong việc training lên
 ### 3.1. Model 1: VGG16
-* Model_name: VCG16 + Dense layer
-* Batch_size=32, epochs =1000, verbose=1, earlystopping
-* AUC = …
+* Model_name: VCG16 + Gloval Average Pooling 2D+  Dense layer
+* AUC-ROC score trên tập validation = …
 ### 3.2. Model 2: EfficientNetB0
-* Model_name: EfficientNetB0 + Dense layer
-* Epochs =1000, verbose=2, earlystopping
-* AUC = …
+* Model_name: EfficientNetB0 + Gloval Average Pooling 2D+  Dense layer
+* AUC-ROC score trên tập validation = …
 ### 3.3. Model 3: InceptionV3
-* Model_name: InceptionV3 + Dense layer
-* Epochs =1000, verbose=2, earlystopping
-* AUC =...
+* Model_name: InceptionV3 + Gloval Average Pooling 2D+  Dense layer
+* AUC-ROC score trên tập validation=...
 ### 3.4. Model 4: ResNet50
-* Model_name: ResNet50 + Dense layer
-* Epochs =1000, verbose=2, earlystopping
-* AUC =...
-
+* Model_name: ResNet50 + Gloval Average Pooling 2D+  Dense layer
+* AUC-ROC score trên tập validation =...
 ### 3.5. Model 5: AlexNet (modified)
-* Model_name: ResNet50 + Dense layer
-* Epochs =1000, verbose=2, earlystopping
-* AUC =...
+* Model_name: ResNet50 ++ Gloval Average Pooling 2D+  Dense layer
+* AUC-ROC score trên tập validation =...
 ![image](https://user-images.githubusercontent.com/84164707/118298285-7c51c980-b509-11eb-8e47-dc8860560006.png)
 
 ## 4. Tools to use
-* Tensorflow
-* keras
+* Tensorflow và Keras
+* Tensorflow-addons
 * Python
 * matplotlib
 * scikit-learn
@@ -69,8 +70,12 @@
 ![image](https://user-images.githubusercontent.com/84164707/118298436-a86d4a80-b509-11eb-9b66-792f926e37bd.png)
 
 ## 5. Kết quả
-## 6. Hướng phát triển:
-* Tìm cách nâng cao tiềm năng dò soát độ ác tính của nốt ruồi.
+
+## 6. Deploy trên web app bằng Streamlit:
+
+## 7. Hướng phát triển:
+* Áp dụng các phương pháp Image Segmentation + Object Detection để nâng cao khả năng xác định được các nốt ruồi (moles) trong ảnh
+* Phân tích các thang đo ROC-AUC curve và confusion matrix để xác định được threshold nên dùng trong việc xác định mole này là bening hay malignant
 * Xây dựng web bắt mắt, dễ sử dụng cũng như tiếp cận nhiều đối tượng khác nhau.
 * Gia tăng tốc độ đồng thời bảo đảm độ chính xác của chương trình.
 * Nghiên cứu thực hiện nhận biết nhiều nôt ruồi cùng lúc.
