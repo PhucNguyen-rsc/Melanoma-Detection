@@ -1,6 +1,12 @@
 # Melanoma-Detection
 ## 1. Tóm tắt đề tài
 * Đưa ra một sản phẩm nhận vào hình ảnh nốt ruồi, xem xét và dự đoán nốt ruồi có ác tính không
+* Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
+
+  + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
+  + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
+  + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
+  + Early detection is critical!
 ## 2. Ý tưởng
 * Ý tưởng của project là xây dựng mô hình CNN có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malign)
 ### 2.1 Mô hình TEFPA:
