@@ -70,6 +70,10 @@
 
 ## 5. Kết quả
 ## 6. Hướng phát triển:
-* Tìm cách nâng độ chính xác cao hơn
-* Xây dựng web đẹp hơn, nhanh hơn và có khả năng đưa nhóm bệnh có thể mắc phải
+* Tìm cách nâng cao tiềm năng dò soát độ ác tính của nốt ruồi.
+* Xây dựng web bắt mắt, dễ sử dụng cũng như tiếp cận nhiều đối tượng khác nhau.
+* Gia tăng tốc độ đồng thời bảo đảm độ chính xác của chương trình.
+* Nghiên cứu thực hiện nhận biết nhiều nôt ruồi cùng lúc.
+
+
 
