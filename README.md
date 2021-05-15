@@ -66,6 +66,7 @@
 ### 3.5. Model 5: AlexNet (modified)
 * Model_name: ResNet50 ++ Gloval Average Pooling 2D+  Dense layer
 * AUC-ROC score trên tập validation = 0.727487628137151
+
 ![image](https://user-images.githubusercontent.com/84164707/118350612-e1e19c80-b581-11eb-8a8c-ec35a088ef39.png)
 
 
