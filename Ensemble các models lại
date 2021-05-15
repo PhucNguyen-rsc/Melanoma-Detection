@@ -1,0 +1,21 @@
+#install deep stack:
+pip install deepstack==0.0.9
+
+#đưa các model thành keras member chuẩn bị cho ensemble:
+import deepstack
+from deepstack.base import KerasMember
+
+member1 = KerasMember(name="model_1", keras_model=model_1, train_batches=train_generator, val_batches=validation_generator)
+member2 = KerasMember(name="model_2", keras_model=model_2, train_batches=train_generator, val_batches=validation_generator)
+member3 = KerasMember(name="model_3", keras_model=model_3, train_batches=train_generator, val_batches=validation_generator)
+member4 = KerasMember(name="model_4", keras_model=model_4, train_batches=train_generator, val_batches=validation_generator)
+member5 = KerasMember(name="model_5", keras_model=model_5, train_batches=train_generator, val_batches=validation_generator)
+
+#fit để tìm ra weights cho từng model:
+
+from deepstack.ensemble import DirichletEnsemble
+clear_session()
+wAvgEnsemble = DirichletEnsemble()
+wAvgEnsemble.add_members([member1, member2, member3, member4, member5])
+history= wAvgEnsemble.fit()
+wAvgEnsemble.describe()
