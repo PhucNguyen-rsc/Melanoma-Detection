@@ -18,7 +18,7 @@
 * Sample:
   * benign mole
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
-  * malign mole
+  * malignant mole
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 ### 2.3. Lý do chọn mô hình CNN
 * Những mô hình sử sụng:
