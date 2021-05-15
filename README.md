@@ -45,20 +45,29 @@
 
 ### 3.1. Model 1: VGG16
 * Model_name: VCG16 + Gloval Average Pooling 2D+  Dense layer
-* AUC-ROC score trên tập validation = …
+* AUC-ROC score trên tập validation = 0.8829754330151997
+![image](https://user-images.githubusercontent.com/84164707/118350526-6aac0880-b581-11eb-9c14-c56e3bc45c64.png)
+
 ### 3.2. Model 2: EfficientNetB0
 * Model_name: EfficientNetB0 + Gloval Average Pooling 2D+  Dense layer
-* AUC-ROC score trên tập validation = …
+* AUC-ROC score trên tập validation = 0.6839872746553552
+![image](https://user-images.githubusercontent.com/84164707/118350532-7a2b5180-b581-11eb-81c1-2270eaa66996.png)
+
 ### 3.3. Model 3: InceptionV3
 * Model_name: InceptionV3 + Gloval Average Pooling 2D+  Dense layer
-* AUC-ROC score trên tập validation=...
+* AUC-ROC score trên tập validation = 0.8140906680805939
+![image](https://user-images.githubusercontent.com/84164707/118350544-8f07e500-b581-11eb-930b-1c1aa2b0e1d2.png)
+
 ### 3.4. Model 4: ResNet50
 * Model_name: ResNet50 + Gloval Average Pooling 2D+  Dense layer
-* AUC-ROC score trên tập validation =...
+* AUC-ROC score trên tập validation = 0.7783669141039237
+![image](https://user-images.githubusercontent.com/84164707/118350581-c70f2800-b581-11eb-876c-cea9dcbc93ff.png)
+
 ### 3.5. Model 5: AlexNet (modified)
 * Model_name: ResNet50 ++ Gloval Average Pooling 2D+  Dense layer
-* AUC-ROC score trên tập validation =...
-![image](https://user-images.githubusercontent.com/84164707/118298285-7c51c980-b509-11eb-8e47-dc8860560006.png)
+* AUC-ROC score trên tập validation = 0.727487628137151
+![image](https://user-images.githubusercontent.com/84164707/118350612-e1e19c80-b581-11eb-8a8c-ec35a088ef39.png)
+
 
 ### Tìm weights cụ thể cho từng model:
 - Chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model 
