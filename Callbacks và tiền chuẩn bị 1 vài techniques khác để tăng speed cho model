@@ -1,0 +1,9 @@
+# class weights từ sklearn:
+train_labels = train_1['target'].to_numpy()
+validation_labels= validation_1['target'].to_numpy()
+from sklearn.utils import class_weight
+class_weights= class_weight.compute_class_weight('balanced', np.unique(train_labels), train_labels )
+class_weights_dict = dict(enumerate(class_weights)) #chúng ta sẽ pass cái này vô training
+
+#Early Stopping:
+stop = EarlyStopping(monitor='val_auc', patience =10, restore_best_weights=True)
