@@ -58,6 +58,8 @@
 * AUC-ROC score trên tập validation =...
 ![image](https://user-images.githubusercontent.com/84164707/118298285-7c51c980-b509-11eb-8e47-dc8860560006.png)
 
+### Tìm weights cụ thể cho từng model:
+- Chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model 
 ## 4. Tools to use
 * Tensorflow và Keras
 * Tensorflow-addons
