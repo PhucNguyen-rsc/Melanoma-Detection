@@ -1,0 +1,58 @@
+# các model Inception V3, EfficientNetB0, VGG16 và ResNet50 đều như nhau:
+%%time 
+model_base_1= tf.keras.applications.VGG16(include_top=False, 
+                                                   weights='imagenet', 
+                                                   input_shape=(256,256,3))
+model_base_1.trainable= True
+model_1 = tf.keras.Sequential([
+  model_base_1,
+  GlobalAveragePooling2D(),
+  Dense(1, activation = 'sigmoid', bias_initializer= initializer)
+])
+
+clear_session()
+set_seed(42)
+np.random.RandomState(42)
+
+checkpoint_1= ModelCheckpoint("output/kaggle/working/model_1.h5", save_best_only= True)
+
+model_1.compile(optimizer=tf.keras.optimizers.Adam(1e-5), 
+                metrics=tf.keras.metrics.AUC(curve= "ROC"), 
+                loss=tfa.losses.SigmoidFocalCrossEntropy())
+model_1.summary()
+history_1=model_1.fit(train_generator,
+                      validation_data=validation_generator,
+                      batch_size=32, 
+                      epochs =1000, 
+                      verbose=1, 
+                      workers=32,
+                      max_queue_size=16,
+                      use_multiprocessing=True,
+                      class_weight= class_weights_dict,
+                      callbacks=[stop, checkpoint_1])
+
+#AlexNet tương tự, tuy nhiên phải tự tạo lại chứ không thể import model từ keras.applications (lưu ý phía dưới là cấu trúc AlexNet với nhiều filters hơn với mỗi lớp):
+%%time 
+
+model_6 = Sequential()
+model_6.add(layers.experimental.preprocessing.Resizing(224, 224, interpolation="bilinear", input_shape=(256,256,3)))
+model_6.add(layers.Conv2D(96, 11, strides=4, padding='same'))
+model_6.add(layers.Lambda(tf.nn.local_response_normalization))
+model_6.add(layers.Activation('relu'))
+model_6.add(layers.MaxPooling2D(3, strides=2))
+model_6.add(layers.Conv2D(256, 5, strides=4, padding='same'))
+model_6.add(layers.Lambda(tf.nn.local_response_normalization))
+model_6.add(layers.Activation('relu'))
+model_6.add(layers.MaxPooling2D(3, strides=2))
+model_6.add(layers.Conv2D(384, 3, strides=4, padding='same'))
+model_6.add(layers.Activation('relu'))
+model_6.add(layers.Conv2D(384, 3, strides=4, padding='same'))
+model_6.add(layers.Activation('relu'))
+model_6.add(layers.Conv2D(256, 3, strides=4, padding='same'))
+model_6.add(layers.Activation('relu'))
+model_6.add(layers.Flatten())
+model_6.add(layers.Dense(4096, activation='relu'))
+model_6.add(layers.Dropout(0.5))
+model_6.add(layers.Dense(4096, activation='relu'))
+model_6.add(layers.Dropout(0.5))
+model_6.add(layers.Dense(1, activation='sigmoid'))
