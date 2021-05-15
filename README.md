@@ -7,7 +7,7 @@
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
   + Early detection is critical!"
 ## 2. Ý tưởng
-* Ý tưởng của project là xây dựng mô hình CNN có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malign)
+* Ý tưởng của project là áp dụng transfer learning và thuật toán ensemble blending trong việc xây dựng mô hình có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malignant)
 ### 2.1 Mô hình TEFPA:
 * Task: input là hình ảnh nốt ruồi, output là dự đoán có bị ung thư da hay không
 * Experiment: những hình ảnh nốt ruồi cùng với dự đoán 
