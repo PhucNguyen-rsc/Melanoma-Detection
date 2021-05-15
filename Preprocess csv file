@@ -1,0 +1,28 @@
+#link the dataset: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
+#download dataset qua API của kaggle: kaggle competitions download -c siim-isic-melanoma-classification
+
+
+#import file csv trong tập train từ trên Kaggle 
+train_raw= pd.read_csv('../input/siim-isic-melanoma-classification/train.csv')
+
+#với mỗi tên ảnh trong tập csv gắn thêm cụm ".jpg vào phía sau
+def append_ext(fn):
+    return fn+".jpg"
+
+train_raw['image_name']= train_raw['image_name'].apply(append_ext)
+train_raw= train_raw.sample(frac=1).reset_index()
+#pick các bức ảnh sau khi đã xào lên:
+train_draft= train_raw [:4000]
+validation_draft =train_raw[4000:4500]
+
+#tìm các ảnh được nhận diện là melanoma trong file csv
+melanoma= train_raw.loc[train_raw['benign_malignant']== "malignant"]
+melanoma= melanoma.sample(frac=1, random_state=42).reset_index(drop=True)
+
+#ghép các ảnh melanoma tìm được lên phía trên train_draft và validation_draft:
+train_1= pd.concat([train_draft,melanoma[:500]], axis=0, join='inner' ).sample(frac=1, random_state=42).reset_index(drop=True)
+validation_1= pd.concat([validation_draft, melanoma[500:]], axis=0, join='inner').sample(frac=1, random_state=42).reset_index(drop=True)
+
+#đây là để chuẩn bị file test:
+test_raw= pd.read_csv("../input/siim-isic-melanoma-classification/test.csv")
+test_raw['image_name']= test_raw['image_name'].apply(append_ext)
