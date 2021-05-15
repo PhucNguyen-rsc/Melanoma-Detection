@@ -41,6 +41,8 @@
   + Dùng Sigmoid Focal Crossentropy là hàm loss (có trong tensorflow-addons). Hàm loss này đã được chứng minh là rất hiệu quả trong việc xử lý những bộ file dataset ảnh có tính imbalanced cao, cơ bản vì hàm này ép các models phải học những đặc trưng khác trong ảnh, không được chỉ tập trung vào 1 hay 1 vài features đơn lẻ
   + Dùng thang đo ROC-AUC làm metrics, vì đây là thang đo mang tính khách quan và chính xác hơn đối với những file dataset có đô imbalanced cao
   + Ngoài ra, trong lúc training, chúng em còn áp dụng workers, use_multiprocessing để tăng tốc độ trong việc training lên
+ ![image](https://user-images.githubusercontent.com/84164707/118348362-f028bc00-b573-11eb-9bf9-7c0e7b02d047.png)
+
 ### 3.1. Model 1: VGG16
 * Model_name: VCG16 + Gloval Average Pooling 2D+  Dense layer
 * AUC-ROC score trên tập validation = …
