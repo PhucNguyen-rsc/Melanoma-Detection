@@ -87,10 +87,10 @@
 ![image](https://user-images.githubusercontent.com/84164707/118298422-a4412d00-b509-11eb-8abd-4f0441a00c88.png)
 ![image](https://user-images.githubusercontent.com/84164707/118298436-a86d4a80-b509-11eb-9b66-792f926e37bd.png)
 
-## 5. Kết quả
+## 5. Kết quả:
 
 ## 6. Deploy trên web app bằng Streamlit:
-
+- Bọn em quyết định dùng streamlit để tạo 1 web app cơ bản classify ảnh bọn em đưa vào, chi tiết về code ở trên file Deploy
 ## 7. Hướng phát triển:
 * Áp dụng các phương pháp Image Segmentation + Object Detection để nâng cao khả năng xác định được các nốt ruồi (moles) trong ảnh
 * Phân tích các thang đo ROC-AUC curve và confusion matrix để xác định được threshold nên dùng trong việc xác định mole này là bening hay malignant
