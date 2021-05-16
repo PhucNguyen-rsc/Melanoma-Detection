@@ -1,6 +1,5 @@
 #chuẩn bị các tập generator cho train và test
-image_generator = ImageDataGenerator(rescale=1. /255.0,
-                                     dtype='float16',
+image_generator = ImageDataGenerator(dtype='float32',
                                      horizontal_flip=True,
                                      vertical_flip=True,
                                      rotation_range=20,
