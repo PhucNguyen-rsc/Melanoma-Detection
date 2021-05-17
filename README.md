@@ -122,6 +122,9 @@ File train sau xử lý
 - Bọn em quyết định dùng streamlit để tạo 1 web app cơ bản classify ảnh bọn em đưa vào, chi tiết về code ở trên file Deploy. Ở đây mặc dù nhóm dùng cả 5 model để ensemble kết hợp lại để cho kết quả cuối cùng, thế nhưng nhóm chúng em nghĩ rằng chỉ cần áp dụng VGG16 vào là đủ (vì VGG16 có tỉ lệ đúng rất cao và là thành phần quan trọng chiếm tỉ lệ cao nhất khi ensemble lại). Điều này có thể giúp chúng ta đảm bảo tốc độ chạy của mô hình thuật toán mà vẫn đảm bảo được khả năng dự đoán của model.
 --> xem demo trên Youtube: https://youtu.be/vAQ9V3F0VTA
 
+- Hướng dẫn sử dụng:
++ Vì Streamlit chỉ demo được trên local host nên phải tải code về rồi chạy lại trong máy
++ Warning: nhớ cài đặt pydot, graphviz, pydotplus, streamlit đầy đủ vào enviroment để code chạy được
 ## 7. Hướng phát triển:
 * Train trên toàn bộ dữ liệu ảnh, có thể sẽ chuyển qua file TFRecord ddeere tăng hiệu quả training lên
 * Như đã nói ở trên, sẽ áp dụng lớp Preproccessing Input, thêm các lớp Dense layers phía sau
