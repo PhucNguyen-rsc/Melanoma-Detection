@@ -8,7 +8,7 @@ input = tf.keras.layers.Input([None, None, 3], dtype = tf.float32) #đây chỉ 
 preprocessing = tensorflow.keras.applications.resnet.preprocess_input(input) #preprocess input 
 base = model_base_1 (preprocessing)
 glob = GlobalAveragePooling2D() (base)
-dense_1 = Dense(1024, activation='relu') (glob) #tùy vào cấu trúc của từng pretrained model, ở đây do VGG16
+dense_1 = Dense(1024, activation='relu') (glob) #tùy vào cấu trúc của từng pretrained model
 dense_2 = Dense(512, activation='relu' ) (dense_1)
 dense_3 = Dense(64, activation='relu' ) (dense_2)
 out= Dense(1, activation = 'sigmoid') (dense_3)
@@ -34,7 +34,7 @@ history_1=model_1.fit(train_generator,
                       max_queue_size=16,
                       use_multiprocessing=True,
                       class_weight= class_weights_dict,
-                      callbacks=[stop, checkpoint_1])
+                      callbacks=[stop, checkpoint_1, lr])
 
 #AlexNet tương tự, tuy nhiên phải tự tạo lại chứ không thể import model từ keras.applications (lưu ý phía dưới là cấu trúc AlexNet với nhiều filters hơn với mỗi lớp):
 
