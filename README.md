@@ -47,6 +47,11 @@
 ### 2.4. Tiền xử lý dữ liệu
 * Do dataset bị imbalanced cao nên tụi em đã gom toàn bộ ảnh malignant lại
 * Nhóm chúng em áp dụng xáo trộn file csv lại , sau đó chọn 4000 bức ảnh benign đàu tiên + 500 bức ảnh malignant làm tập train ; 500 bức ảnh benign tiếp theo và các ảnh malignant còn lại làm tập validation
+
+![image](https://user-images.githubusercontent.com/68393604/118480020-e9e53c00-b73b-11eb-8e44-84c6548c93cd.png)
+
+File train sau xử lý
+
 * Nhóm chúng em dùng các hàm flow_from_dataframe cùng với Imaga Data Generator để dán nhãn cho ảnh (có được từ file csv ở trên)
 * Dùng ImageDataGenerator resize lại ảnh thành 256x256x3, đồng thời áp dụng các phương pháp data augmentation khác như shearing, flipping,...
 ## 3. Pre-trained model
