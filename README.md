@@ -20,14 +20,21 @@
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
   * malignant mole
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
+
+- Bộ dữ liệu bọn em sử dụng đến từ cuộc thi nổi tiếng SIIM-ISIC Melanoma Classification trên Kaggle (có thể download qua API sau: kaggle competitions download -c siim-isic-melanoma-classification)
+- Về cơ bản, bộ dữ liệu được cho có thể chia thành 4 phần dữ liệu chính: file ảnh dưới dạng DICOM format, file ảnh dưới dạng JPEG, file ảnh và metadata dưới dạng TFRecord, và file metadata và nhãn (labels) dưới dạng file csv. Ở đây, vì sự thuật tiện nên nhóm đã quyết định chọn file ảnh jpeg và file csv (để dán nhãn) trong quá trình train các models.
+- Bài toán được đặt ra về cơ bản có 2 loại nhãn : 0 (là benign) và 1 (là malignant). Output của model nên là 1 probability chạy từ 0 đến 1
+- Về cơ bản, 0 tức là những hình ảnh tế bào da thông thường và 1 tức là ảnh tế bào da bị ung thư hắc tố. Tuy nhiên, khi lúc sau cả nhóm inspect lại thì thấy có **nhiều loại** benign (tức là sub-predictions). Điều này đã đồng nghĩa với việc là ngay cả các ảnh benign cũng có rất nhiều loại/patterns khác nhau, và nhóm đã thiếu sót khi chia dữ liệu ảnh cho việc training và validation không tính đến khả năng này (xem thêm ở lúc sau)
+- Vì đây cốt lõi là file phát hiện bệnh nên đồng thời tỉ lệ imbalanced giữa 2 loại label lớn rất lớn. 
+
 ### 2.3. Lý do chọn mô hình CNN
 * Những mô hình sử sụng:
-  + VCG16
+  + VGG16
   + EfficientNetB0
   + InceptionV3
   + ResNet50
-  + AlexNet (modified)
-* Lý do: dựa vào một số bài báo nghiên cứu để có được kết quả cao, đồng thời đây cũng là những models thường được đưa ra nghiên cứu
+  + AlexNet (nhóm tự tái tạo lại dựa trện 1 bài báo trên medium, vì AlexNet là 1 trong những model thời đầu nên không thể import qua Keras như thông lệ)
+* Lý do: dựa vào một số bài báo nghiên cứu để có được kết quả cao, đồng thời đây cũng là những models thường được đưa ra nghiên cứu nhiều trong những bài báo liên quan đến việc dùng Transfer Learning/ Fine Tuning trong việc chẩn đoán và phát hiện tế bào ung thư hắc tố da (melanoma)
 ### 2.4. Tiền xử lý dữ liệu
 * Do dataset bị imbalanced cao nên tụi em đã gom toàn bộ ảnh malignant lại
 * Nhóm chúng em áp dụng xáo trộn file csv lại , sau đó chọn 4000 bức ảnh benign đàu tiên + 500 bức ảnh malignant làm tập train ; 500 bức ảnh benign tiếp theo và các ảnh malignant còn lại làm tập validation
@@ -75,7 +82,8 @@
 
 
 ### Tìm weights cụ thể cho từng model:
-- Chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model 
+- Với mục tiêu áp dụng kĩ thuật Ensemble Blending, chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model là: 0.8938 cho model 1 (VGG16), 0.0403 cho model 2 (EfficientNetB0), 0.0126 cho model 3 (InceptionV3), 0.0029 cho model 4 (ResNet50) và 0.0504 cho model 5 (AlexNet)
+--> chú ý: đây là những thông số thu được trước khi bắt đầu thêm vào lớp preprocessing input cho riêng từng model (thay vì dựa vào ImageDataGenerator) và thêm vào các lớp Dense layers sau lớp Global Average Pooling cho từng model (để giảm các feature maps dần dần xuống cho model có performance tốt hơn, lấy cảm hứng từ dự án của Thịnh và Nga).
 ## 4. Tools to use
 * Tensorflow và Keras
 * Tensorflow-addons
@@ -88,15 +96,18 @@
 ![image](https://user-images.githubusercontent.com/84164707/118298436-a86d4a80-b509-11eb-9b66-792f926e37bd.png)
 
 ## 5. Kết quả:
+- Sau khi submit để tập test trên Kaggle, chúng em thấy được điểm của chúng em trên tập test là 0.8070, không phải là 1 số điểm quá cao. Nguyên ngân có lẽ là do bọn em lần này chưa thực sự tối ưu hóa các model và dữ liệu (chọn lọc model chưa tốt, như có thể thấy là model VGG16 chiếm tỉ trọng rất lớn trong việc quyết định điểm ROC-AUC score final so với các model khác; chưa thêm các lớp Dense layers phía sau lớp Global Average Pooling; chưa có lớp Preprocessing input cụ thể cho từng model; đồng thời chưa tận dụng được file metadata có sẵn). Đồng thời nhóm cũng chưa train dữ liệu trên toàn bộ tập dataset nên tỉ lệ bị biased là rất cao.
 
 ## 6. Deploy trên web app bằng Streamlit:
-- Bọn em quyết định dùng streamlit để tạo 1 web app cơ bản classify ảnh bọn em đưa vào, chi tiết về code ở trên file Deploy
+- Bọn em quyết định dùng streamlit để tạo 1 web app cơ bản classify ảnh bọn em đưa vào, chi tiết về code ở trên file Deploy. Ở đây mặc dù nhóm dùng cả 5 model để ensemble kết hợp lại để cho kết quả cuối cùng, thế nhưng nhóm chúng em nghĩ rằng chỉ cần áp dụng VGG16 vào là đủ (vì VGG16 có tỉ lệ đúng rất cao và là thành phần quan trọng chiếm tỉ lệ cao nhất khi ensemble lại). Điều này có thể giúp chúng ta đảm bảo tốc độ chạy của mô hình thuật toán mà vẫn đảm bảo được khả năng dự đoán của model.
+
 ## 7. Hướng phát triển:
+* Train trên toàn bộ dữ liệu ảnh, có thể sẽ chuyển qua file TFRecord ddeere tăng hiệu quả training lên
+* Như đã nói ở trên, sẽ áp dụng lớp Preproccessing Input, thêm các lớp Dense layers phía sau
 * Áp dụng các phương pháp Image Segmentation + Object Detection để nâng cao khả năng xác định được các nốt ruồi (moles) trong ảnh
 * Phân tích các thang đo ROC-AUC curve và confusion matrix để xác định được threshold nên dùng trong việc xác định mole này là bening hay malignant
-* Xây dựng web bắt mắt, dễ sử dụng cũng như tiếp cận nhiều đối tượng khác nhau.
-* Gia tăng tốc độ đồng thời bảo đảm độ chính xác của chương trình.
-* Nghiên cứu thực hiện nhận biết nhiều nôt ruồi cùng lúc.
+* Xây dựng web bắt mắt và hiệu quả hơn, dễ sử dụng cũng như tiếp cận nhiều đối tượng khác nhau.
+* Nghiên cứu thực hiện nhận biết nhiều nôt ruồi cùng lúc (hợp lí trong tình huống deploy model thực tế hơn)
 
 
 
