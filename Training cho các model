@@ -37,7 +37,8 @@ history_1=model_1.fit(train_generator,
                       callbacks=[stop, checkpoint_1, lr])
 
 #AlexNet tương tự, tuy nhiên phải tự tạo lại chứ không thể import model từ keras.applications (lưu ý phía dưới là cấu trúc AlexNet với nhiều filters hơn với mỗi lớp):
-#cho AlexNet, bọn em không biết phải xử lý preprocess image như thế nào  
+#tái tạo lại base model cho AlexNet:
+
 model_base_6 = Sequential()
 model_base_6.add(layers.experimental.preprocessing.Resizing(224, 224, interpolation="bilinear", input_shape=(256,256,3)))
 model_base_6.add(layers.Conv2D(96, 11, strides=4, padding='same'))
