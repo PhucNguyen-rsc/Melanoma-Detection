@@ -8,7 +8,7 @@
   + Early detection is critical!"
 ## 1.2 Link các sản phẩm có liên quan:
   * Link các model đã được trained xong dựa trên tập dữ liệu ở dưới: https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
-  * Link của bài Presentation:
+  * Link của bài Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
   * Link dataset sử dụng trên Kaggle: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
 ## 2. Ý tưởng
 * Ý tưởng của project là áp dụng transfer learning và thuật toán ensemble blending trong việc xây dựng mô hình có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malignant)
