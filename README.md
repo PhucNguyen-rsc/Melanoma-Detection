@@ -17,8 +17,10 @@
 ### 2.2. Data
 * Sample:
   * benign mole
+  
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
   * malignant mole
+  
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 
 - Bộ dữ liệu bọn em sử dụng đến từ cuộc thi nổi tiếng SIIM-ISIC Melanoma Classification trên Kaggle (có thể download qua API sau: kaggle competitions download -c siim-isic-melanoma-classification)
@@ -83,6 +85,9 @@
 
 ### Tìm weights cụ thể cho từng model:
 - Với mục tiêu áp dụng kĩ thuật Ensemble Blending, chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model là: 0.8938 cho model 1 (VGG16), 0.0403 cho model 2 (EfficientNetB0), 0.0126 cho model 3 (InceptionV3), 0.0029 cho model 4 (ResNet50) và 0.0504 cho model 5 (AlexNet)
+
+(![image](https://user-images.githubusercontent.com/68393604/118476868-3fb7e500-b738-11eb-983d-983ede716a3f.png)
+
 --> chú ý: đây là những thông số thu được trước khi bắt đầu thêm vào lớp preprocessing input cho riêng từng model (thay vì dựa vào ImageDataGenerator) và thêm vào các lớp Dense layers sau lớp Global Average Pooling cho từng model (để giảm các feature maps dần dần xuống cho model có performance tốt hơn, lấy cảm hứng từ dự án của Thịnh và Nga).
 ## 4. Tools to use
 * Tensorflow và Keras
