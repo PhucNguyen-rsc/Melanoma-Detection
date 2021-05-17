@@ -34,6 +34,8 @@
 
 - Vì đây cốt lõi là file phát hiện bệnh nên đồng thời tỉ lệ imbalanced giữa 2 loại label lớn rất lớn. 
 
+![image](https://user-images.githubusercontent.com/68393604/118479771-a1c61980-b73b-11eb-8311-0baaf8936805.png)
+
 ### 2.3. Lý do chọn mô hình CNN
 * Những mô hình sử sụng:
   + VGG16
