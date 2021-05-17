@@ -114,7 +114,7 @@ File train sau xử lý
 
 (![image](https://user-images.githubusercontent.com/68393604/118476868-3fb7e500-b738-11eb-983d-983ede716a3f.png)
 
---> chú ý: đây là những thông số thu được trước khi bắt đầu thêm vào lớp preprocessing input cho riêng từng model (thay vì dựa vào ImageDataGenerator) và thêm vào các lớp Dense layers sau lớp Global Average Pooling cho từng model (để giảm các feature maps dần dần xuống cho model có performance tốt hơn, lấy cảm hứng từ dự án của Thịnh và Nga).
+--> chú ý: đây là những thông số thu được trước khi bắt đầu thêm vào lớp preprocessing input cho riêng từng model (thay vì dựa vào ImageDataGenerator) và thêm vào các lớp Dense layers sau lớp Global Average Pooling cho từng model (để giảm các feature maps dần dần xuống cho model có performance tốt hơn, học từ dự án của Thịnh và Nga).
 ## 4. Tools to use
 * Tensorflow và Keras
 * Tensorflow-addons
