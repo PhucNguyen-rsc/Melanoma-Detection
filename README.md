@@ -1,17 +1,21 @@
 # Melanoma-Detection
-## 1. Tóm tắt đề tài
+## 1.1 Tóm tắt đề tài
 * Đưa ra một sản phẩm nhận vào hình ảnh nốt ruồi, xem xét và dự đoán nốt ruồi có ác tính không
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
   + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
   + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
   + Early detection is critical!"
+## 1.2 Link các sản phẩm có liên quan:
+  * Link các model đã được trained xong dựa trên tập dữ liệu ở dưới: https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
+  * Link của bài Presentation:
+  * Link dataset sử dụng trên Kaggle: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
 ## 2. Ý tưởng
 * Ý tưởng của project là áp dụng transfer learning và thuật toán ensemble blending trong việc xây dựng mô hình có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malignant)
 ### 2.1 Mô hình TEFPA:
 * Task: input là hình ảnh nốt ruồi, output là dự đoán có bị ung thư da hay không
 * Experiment: những hình ảnh nốt ruồi cùng với dự đoán 
-* Function space: 
+* Function space: các models AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50.
 * Performance: AUC, ROC, hàm loss là focal crossentropy
 * Algorithm: áp dụng và train lại toàn bộ các pretrained models như AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50. Đồng thời nhóm ensemble các models này lại bằng phương pháp weighted average ensemble, và áp dụng Deep Stack để tìm ra weight cụ thể cho từng model
 ### 2.2. Data
