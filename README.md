@@ -26,7 +26,12 @@
 - Bộ dữ liệu bọn em sử dụng đến từ cuộc thi nổi tiếng SIIM-ISIC Melanoma Classification trên Kaggle (có thể download qua API sau: kaggle competitions download -c siim-isic-melanoma-classification)
 - Về cơ bản, bộ dữ liệu được cho có thể chia thành 4 phần dữ liệu chính: file ảnh dưới dạng DICOM format, file ảnh dưới dạng JPEG, file ảnh và metadata dưới dạng TFRecord, và file metadata và nhãn (labels) dưới dạng file csv. Ở đây, vì sự thuật tiện nên nhóm đã quyết định chọn file ảnh jpeg và file csv (để dán nhãn) trong quá trình train các models.
 - Bài toán được đặt ra về cơ bản có 2 loại nhãn : 0 (là benign) và 1 (là malignant). Output của model nên là 1 probability chạy từ 0 đến 1
-- Về cơ bản, 0 tức là những hình ảnh tế bào da thông thường và 1 tức là ảnh tế bào da bị ung thư hắc tố. Tuy nhiên, khi lúc sau cả nhóm inspect lại thì thấy có **nhiều loại** benign (tức là sub-predictions). Điều này đã đồng nghĩa với việc là ngay cả các ảnh benign cũng có rất nhiều loại/patterns khác nhau, và nhóm đã thiếu sót khi chia dữ liệu ảnh cho việc training và validation không tính đến khả năng này (xem thêm ở lúc sau)
+- Về cơ bản, 0 tức là những hình ảnh tế bào da thông thường và 1 tức là ảnh tế bào da bị ung thư hắc tố. Tuy nhiên, khi lúc sau cả nhóm inspect lại thì thấy có **nhiều loại** benign (tức là sub-predictions). Điều này đã đồng nghĩa với việc là ngay cả các ảnh benign cũng có rất nhiều loại/patterns khác nhau, và nhóm đã thiếu sót khi chia dữ liệu ảnh cho việc training và validation không tính đến khả năng này (xem thêm ở lúc sau
+
+![image](https://user-images.githubusercontent.com/68393604/118479274-059c1280-b73b-11eb-985a-8328ce700e95.png)
+
+![image](https://user-images.githubusercontent.com/68393604/118479419-311efd00-b73b-11eb-8340-773ae8d072d2.png)
+
 - Vì đây cốt lõi là file phát hiện bệnh nên đồng thời tỉ lệ imbalanced giữa 2 loại label lớn rất lớn. 
 
 ### 2.3. Lý do chọn mô hình CNN
