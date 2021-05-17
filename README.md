@@ -123,8 +123,10 @@ File train sau xử lý
 --> xem demo trên Youtube: https://youtu.be/vAQ9V3F0VTA
 
 - Hướng dẫn sử dụng:
-+ Vì Streamlit chỉ demo được trên local host nên phải tải code về rồi chạy lại trong máy
-+ Warning: nhớ cài đặt pydot, graphviz, pydotplus, streamlit đầy đủ vào enviroment để code chạy được
+* Vì Streamlit chỉ demo được trên local host nên phải tải code về rồi chạy lại trong máy
+* Warning: nhớ cài đặt pydot, graphviz, pydotplus, streamlit đầy đủ vào enviroment để code chạy được. Đồng thời nhớ chèn đường link model trained của mình vô để code chạy được
+* Sau khi đã chạy được web lên như google chrome rồi, thao tác như trong video phía trên : nhấn nút Browse File để chọn 1 file ảnh lên (nhớ 1 lần chỉ được chọn 1 tấm thôi, và tấm ảnh đó phải ở dạng jpeg hay jpg hay png) --> sau khi đã upload được lên thì nhấn nút Classify rồi để model chạy 1 lúc. Nếu muốn chọn lại bức khác thì nhớ nhấn nút xóa bức cũ đi rồi chọn lại tấm mới
+
 ## 7. Hướng phát triển:
 * Train trên toàn bộ dữ liệu ảnh, có thể sẽ chuyển qua file TFRecord ddeere tăng hiệu quả training lên
 * Như đã nói ở trên, sẽ áp dụng lớp Preproccessing Input, thêm các lớp Dense layers phía sau
