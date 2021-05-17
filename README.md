@@ -54,6 +54,9 @@ File train sau xử lý
 
 * Nhóm chúng em dùng các hàm flow_from_dataframe cùng với Imaga Data Generator để dán nhãn cho ảnh (có được từ file csv ở trên)
 * Dùng ImageDataGenerator resize lại ảnh thành 256x256x3, đồng thời áp dụng các phương pháp data augmentation khác như shearing, flipping,...
+
+![image](https://user-images.githubusercontent.com/68393604/118490050-ba3c3100-b747-11eb-92de-4dd801873002.png)
+
 ## 3. Pre-trained model
 * Tóm tắt chung: nhìn chung chúng em đều xây dựng các pretrained models với cấu trúc : Base + Global Average Pooling + Dense layer (là lớp Prediction, output chỉ có 1 node). Đồng thời chúng em còn áp dụng những kĩ thuật sau trong training để nâng cao hiệu suất cũng như độ chính xác của các model:
   + Dùng class weights (computed từ sklearn) để áp dụng cho từng class trong traning {0:0.5,
