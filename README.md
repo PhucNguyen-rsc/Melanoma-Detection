@@ -1,15 +1,22 @@
 # Melanoma-Detection
-## 1.1 Tóm tắt đề tài
+## 1. Tóm tắt chung 
+### 1.1 Tóm tắt đề tài
 * Đưa ra một sản phẩm nhận vào hình ảnh nốt ruồi, xem xét và dự đoán nốt ruồi có ác tính không
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
   + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
   + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
   + Early detection is critical!"
-## 1.2 Link các sản phẩm có liên quan:
+### 1.2 Link các sản phẩm có liên quan:
   * Link các model đã được trained xong dựa trên tập dữ liệu ở dưới: https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
   * Link của bài Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
   * Link dataset sử dụng trên Kaggle: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
+  
+### 1.3 Có gì thay đổi so với đợt predict trước:
+- Code về phần preprocessing input đã được sửa (chỉ đang mỗi VGG16 và AlexNet vì những cái còn lại đều tương tự như vậy). Tuy nhiên toàn bộ kết quả ở dưới là cho đợt trained trước chưa bao gồm những chỉnh sửa mới này
+- Đã có kết quả cho từng weight của từng model, đồng thời có cả kết quả đánh giá model trên tập test dataset của cuộc thi SIIM-ISIC Melanoma Classification trên Kaggle
+- Đã deploy web bằng streamlit thành công, chi tiết xem ở phía dưới
+
 ## 2. Ý tưởng
 * Ý tưởng của project là áp dụng transfer learning và thuật toán ensemble blending trong việc xây dựng mô hình có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malignant)
 ### 2.1 Mô hình TEFPA:
