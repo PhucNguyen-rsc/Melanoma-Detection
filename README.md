@@ -1,30 +1,31 @@
 # Melanoma-Detection
 ## 1. Tóm tắt chung 
 ### 1.1 Tóm tắt đề tài
-* Đưa ra một sản phẩm nhận vào hình ảnh nốt ruồi, xem xét và dự đoán nốt ruồi có ác tính không
+* Create a final product that can detect whether the given mole image is cancerous (melanoma disease) or not.
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
   + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
   + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
   + Early detection is critical!"
 ### 1.2 Link các sản phẩm có liên quan:
-  * Link các model đã được trained xong dựa trên tập dữ liệu ở dưới: https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
-  * Link của bài Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
-  * Link dataset sử dụng trên Kaggle: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
+  * Link trained models based on the given dataset (scroll down to see): https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
+  * Link of our Skype Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
+  * Link the skin cancer Kaggle dataset that we'd used: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
   
-### 1.3 Có gì thay đổi so với đợt predict trước:
-- Code về phần preprocessing input đã được sửa (chỉ đang mỗi VGG16 và AlexNet vì những cái còn lại đều tương tự như vậy). Tuy nhiên toàn bộ kết quả ở dưới là cho đợt trained trước chưa bao gồm những chỉnh sửa mới này
-- Đã có kết quả cho từng weight của từng model, đồng thời có cả kết quả đánh giá model trên tập test dataset của cuộc thi SIIM-ISIC Melanoma Classification trên Kaggle
-- Đã deploy web bằng streamlit thành công, chi tiết xem ở phía dưới
+### 1.3 New changes compared to our last time presentation:
+- We had added the preprocessing layer for all our models (here we only showcase the final production code of VGG16 and Alexnet, but the rest is the same). However, the result summary showcased below is still the old one (since we had not updated the new one yet)
+- We also had succesfully calculated the optimal weight for each model in our dataset, as well as the final result based on the test set of the SIIM-ISIC Melanoma Classification contest on Kaggle.
+- We had deployed our model using the Streamlit framework, see the video below for our final result
 
 ## 2. Ý tưởng
-* Ý tưởng của project là áp dụng transfer learning và thuật toán ensemble blending trong việc xây dựng mô hình có khả năng dự đoán ảnh nốt ruồi da đưa vào là lành tính (benign) hay ác tính (malignant)
-### 2.1 Mô hình TEFPA:
-* Task: input là hình ảnh nốt ruồi, output là dự đoán có bị ung thư da hay không
-* Experiment: những hình ảnh nốt ruồi cùng với dự đoán 
-* Function space: các models AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50.
-* Performance: AUC, ROC, hàm loss là focal crossentropy
-* Algorithm: áp dụng và train lại toàn bộ các pretrained models như AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50. Đồng thời nhóm ensemble các models này lại bằng phương pháp weighted average ensemble, và áp dụng Deep Stack để tìm ra weight cụ thể cho từng model
+* The project's aim is applying transfer learning techniques, as well as average-ensemble method to build the system that can accurately classify whether the given mole image is benign or cancerous (melanoma)
+### 2.1 Analysis based on the TEFPA model:
+* Task: inputs are the mole images, outputs are the final predictions (benign or malignant?)
+* Experiment: mole images with their given labels
+* Function space: 5 different models, including AlexNet, VGG16, EfficientNetB0, InceptionV3, and ResNet50.
+* Performance: used metrics are AUC, ROC; used loss function is focal crossentropy
+* Algorithm: applied and retrained all deep learning pretrained models (AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50) based on Keras/Tensorflow framework. After that, we apply the weighted average ensemble technique to intergrate all those 5 models to create a final "parent" model. We utilized the Deep Stack library to find the specific weight for each given model. 
+
 ### 2.2. Data
 * Sample:
   * benign mole
@@ -34,7 +35,7 @@
   
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 
-- Bộ dữ liệu bọn em sử dụng đến từ cuộc thi nổi tiếng SIIM-ISIC Melanoma Classification trên Kaggle (có thể download qua API sau: kaggle competitions download -c siim-isic-melanoma-classification)
+- The dataset we had coming from the famous competition SIIM-ISIC Melanoma Classification on Kaggle (which can be accessed and downloaded via the following API: kaggle competitions download -c siim-isic-melanoma-classification)
 - Về cơ bản, bộ dữ liệu được cho có thể chia thành 4 phần dữ liệu chính: file ảnh dưới dạng DICOM format, file ảnh dưới dạng JPEG, file ảnh và metadata dưới dạng TFRecord, và file metadata và nhãn (labels) dưới dạng file csv. Ở đây, vì sự thuật tiện nên nhóm đã quyết định chọn file ảnh jpeg và file csv (để dán nhãn) trong quá trình train các models.
 - Bài toán được đặt ra về cơ bản có 2 loại nhãn : 0 (là benign) và 1 (là malignant). Output của model nên là 1 probability chạy từ 0 đến 1
 - Về cơ bản, 0 tức là những hình ảnh tế bào da thông thường và 1 tức là ảnh tế bào da bị ung thư hắc tố. Tuy nhiên, khi lúc sau cả nhóm inspect lại thì thấy có **nhiều loại** benign (tức là sub-predictions). Điều này đã đồng nghĩa với việc là ngay cả các ảnh benign cũng có rất nhiều loại/patterns khác nhau, và nhóm đã thiếu sót khi chia dữ liệu ảnh cho việc training và validation không tính đến khả năng này (xem thêm ở lúc sau
