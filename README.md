@@ -17,7 +17,7 @@
 - We also had succesfully calculated the optimal weight for each model in our dataset, as well as the final result based on the test set of the SIIM-ISIC Melanoma Classification contest on Kaggle.
 - We had deployed our model using the Streamlit framework, see the video below for our final result
 
-## 2. Ý tưởng
+## 2. General idea:
 * The project's aim is applying transfer learning techniques, as well as average-ensemble method to build the system that can accurately classify whether the given mole image is benign or cancerous (melanoma)
 ### 2.1 Analysis based on the TEFPA model:
 * Task: inputs are the mole images, outputs are the final predictions (benign or malignant?)
@@ -35,20 +35,21 @@
   
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 
-- The dataset we had coming from the famous competition SIIM-ISIC Melanoma Classification on Kaggle (which can be accessed and downloaded via the following API: kaggle competitions download -c siim-isic-melanoma-classification)
-- Về cơ bản, bộ dữ liệu được cho có thể chia thành 4 phần dữ liệu chính: file ảnh dưới dạng DICOM format, file ảnh dưới dạng JPEG, file ảnh và metadata dưới dạng TFRecord, và file metadata và nhãn (labels) dưới dạng file csv. Ở đây, vì sự thuật tiện nên nhóm đã quyết định chọn file ảnh jpeg và file csv (để dán nhãn) trong quá trình train các models.
-- Bài toán được đặt ra về cơ bản có 2 loại nhãn : 0 (là benign) và 1 (là malignant). Output của model nên là 1 probability chạy từ 0 đến 1
-- Về cơ bản, 0 tức là những hình ảnh tế bào da thông thường và 1 tức là ảnh tế bào da bị ung thư hắc tố. Tuy nhiên, khi lúc sau cả nhóm inspect lại thì thấy có **nhiều loại** benign (tức là sub-predictions). Điều này đã đồng nghĩa với việc là ngay cả các ảnh benign cũng có rất nhiều loại/patterns khác nhau, và nhóm đã thiếu sót khi chia dữ liệu ảnh cho việc training và validation không tính đến khả năng này (xem thêm ở lúc sau
+- The dataset we had coming from the famous competition SIIM-ISIC Melanoma Classification on Kaggle (which can be accessed and downloaded via the following API: kaggle competitions download -c siim-isic-melanoma-classification).
+- In principles, this dataset can be divided into 4 main parts: DICOM-formatted image dataset, JPEG-formatted image dataset, both image dataset and patients' metadata (contextual data) on the form of TFRecord, and a seperate patients' metadata and images' labels in the csv file. 
+- There are two types of labels available in the dataset: 0 means benign mole images and 1 means cancerous (melanoma) mole images. The final output is a probability number that runs from 0 to 1. 
+- When we were working this project, we had recently found out that there are different types of images in the benign class - sub-predictions (we initially assume that all the images belong to one single class are the same). In future, we would come up with a new strategy to deal with this problem.
+
 
 ![image](https://user-images.githubusercontent.com/68393604/118479274-059c1280-b73b-11eb-985a-8328ce700e95.png)
 
 ![image](https://user-images.githubusercontent.com/68393604/118479419-311efd00-b73b-11eb-8340-773ae8d072d2.png)
 
-- Vì đây cốt lõi là file phát hiện bệnh nên đồng thời tỉ lệ imbalanced giữa 2 loại label lớn rất lớn. 
+- The ratio between the given 2 classes (benign and melanoma) is heavily imbalanced, which is a difficult problem that must be deal with. 
 
 ![image](https://user-images.githubusercontent.com/68393604/118479771-a1c61980-b73b-11eb-8311-0baaf8936805.png)
 
-### 2.3. Lý do chọn mô hình CNN
+### 2.3. Reasons why we opt out for those CNN models:
 * Những mô hình sử sụng:
   + VGG16
   + EfficientNetB0
