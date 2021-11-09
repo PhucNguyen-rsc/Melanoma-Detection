@@ -22,7 +22,7 @@
 ### 2.1 Analysis based on the TEFPA model:
 * Task: inputs are the mole images, outputs are the final predictions (benign or malignant?)
 * Experiment: mole images with their given labels
-* Function space: 5 different models, including AlexNet, VGG16, EfficientNetB0, InceptionV3, and ResNet50.
+* Function space: 5 different models used as feature extractors, including AlexNet, VGG16, EfficientNetB0, InceptionV3, and ResNet50.
 * Performance: used metrics are AUC, ROC; used loss function is focal crossentropy
 * Algorithm: applied and retrained all deep learning pretrained models (AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50) based on Keras/Tensorflow framework. After that, we apply the weighted average ensemble technique to intergrate all those 5 models to create a final "parent" model. We utilized the Deep Stack library to find the specific weight for each given model. 
 
@@ -50,99 +50,94 @@
 ![image](https://user-images.githubusercontent.com/68393604/118479771-a1c61980-b73b-11eb-8311-0baaf8936805.png)
 
 ### 2.3. Reasons why we opt out for those CNN models:
-* Những mô hình sử sụng:
+* CNN models that we used as feature extractors:
   + VGG16
   + EfficientNetB0
   + InceptionV3
   + ResNet50
-  + AlexNet (nhóm tự tái tạo lại dựa trện 1 bài báo trên medium, vì AlexNet là 1 trong những model thời đầu nên không thể import qua Keras như thông lệ)
-* Lý do: dựa vào một số bài báo nghiên cứu để có được kết quả cao, đồng thời đây cũng là những models thường được đưa ra nghiên cứu nhiều trong những bài báo liên quan đến việc dùng Transfer Learning/ Fine Tuning trong việc chẩn đoán và phát hiện tế bào ung thư hắc tố da (melanoma)
-### 2.4. Tiền xử lý dữ liệu
-* Do dataset bị imbalanced cao nên tụi em đã gom toàn bộ ảnh malignant lại
-* Nhóm chúng em áp dụng xáo trộn file csv lại , sau đó chọn 4000 bức ảnh benign đàu tiên + 500 bức ảnh malignant làm tập train ; 500 bức ảnh benign tiếp theo và các ảnh malignant còn lại làm tập validation
+  + AlexNet (we recreated this model based on the instructions in one of the Medium blogs, since Alexnet is one of the first-generation models and is not integrated into the native Keras Applications framework)
+* Lý do: Based on some of the research papers about melanoma-detection that we have read, those models are regularly used in research and have been proved to give out consistent good scores)
+### 2.4. Preprocessing the input data:
+* Since the dataset's ratio is highly imbalanced, we had randomly selected 4000 benign mole images and 500 malignant (cancerous) mole images as our training set; we then picked randomly another 500 benign mole images + 80 malignant images as our validation set. Those datasets would be used for our training session.
 
 ![image](https://user-images.githubusercontent.com/68393604/118480020-e9e53c00-b73b-11eb-8e44-84c6548c93cd.png)
 
-File train sau xử lý
+ Train dataset's ratio after we had preprocessed it
 
-* Nhóm chúng em dùng các hàm flow_from_dataframe cùng với Imaga Data Generator để dán nhãn cho ảnh (có được từ file csv ở trên)
-* Dùng ImageDataGenerator resize lại ảnh thành 256x256x3, đồng thời áp dụng các phương pháp data augmentation khác như shearing, flipping,...
+* Our team used flow_from_dataframe function alongside with Imaga Data Generator to prepare for our image data generator (for our training session).
+* We used ImageDataGenerator function to resize our images into the size of 256x256, while applying various data augmentation techniques such as shearing, flipping, zooming, etc.
 
 ![image](https://user-images.githubusercontent.com/68393604/118490050-ba3c3100-b747-11eb-92de-4dd801873002.png)
 
 ## 3. Pre-trained model
-* Tóm tắt chung: nhìn chung chúng em đều xây dựng các pretrained models với cấu trúc : Base + Global Average Pooling + Dense layer (là lớp Prediction, output chỉ có 1 node). Đồng thời chúng em còn áp dụng những kĩ thuật sau trong training để nâng cao hiệu suất cũng như độ chính xác của các model:
-  + Dùng class weights (computed từ sklearn) để áp dụng cho từng class trong traning {0:0.5,
-                                                                                      1:4.0)
-  + Dùng Data Augmentation trong bước chuẩn bị để nâng cao hiệu suất models
-  + Dùng Sigmoid Focal Crossentropy là hàm loss (có trong tensorflow-addons). Hàm loss này đã được chứng minh là rất hiệu quả trong việc xử lý những bộ file dataset ảnh có tính imbalanced cao, cơ bản vì hàm này ép các models phải học những đặc trưng khác trong ảnh, không được chỉ tập trung vào 1 hay 1 vài features đơn lẻ
-  + Dùng thang đo ROC-AUC làm metrics, vì đây là thang đo mang tính khách quan và chính xác hơn đối với những file dataset có đô imbalanced cao
-  + Ngoài ra, trong lúc training, chúng em còn áp dụng workers, use_multiprocessing để tăng tốc độ trong việc training lên
+* Summary: we build our deep learning models based on the following architecture: Feature extractor model (imported from Keras Applications) + customized Global Average Pooling + customized Dense layer(Prediction layer, which only has 1 node). We also applied other traning techniques to improve the models' learning process as well as their accuracy:
+  + Calculating class weights (computed from sklearn) to apply to each individual class while traning {0:0.5,
+                                                                                                       1:4.0)
+  + Using Data Augmentation in the preparation process to help the models generalize better.
+  + Using Sigmoid Focal Crossentropy as a loss function(available to use in tensorflow-addons). This loss function has been known for being extremely effective in handling imbalanced dataset, in parts because this loss function force our models to learn different patterns in the minority class.
+  + Using ROC-AUC as our main metric, since this is a reliable metric used for binary classification problems that have imabalanced dataset.
+  + Besides, while training, we also applied workers, use_multiprocessing to speed up the training process.
  ![image](https://user-images.githubusercontent.com/84164707/118348362-f028bc00-b573-11eb-9bf9-7c0e7b02d047.png)
 
 ### 3.1. Model 1: VGG16
-* Model_name: VCG16 + Gloval Average Pooling 2D+  Dense layer
-* AUC score trên tập validation = 0.8829754330151997
+* Model_name: VCG16 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
+* AUC score recorded in the validation set: 0.8829754330151997
 
 ![image](https://user-images.githubusercontent.com/84164707/118350526-6aac0880-b581-11eb-9c14-c56e3bc45c64.png)
 
 ### 3.2. Model 2: EfficientNetB0
-* Model_name: EfficientNetB0 + Gloval Average Pooling 2D+  Dense layer
-* AUC score trên tập validation = 0.6839872746553552
+* Model_name: EfficientNetB0 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
+* AUC score recorded in the validation set: 0.6839872746553552 
 
 ![image](https://user-images.githubusercontent.com/84164707/118350532-7a2b5180-b581-11eb-81c1-2270eaa66996.png)
 
 ### 3.3. Model 3: InceptionV3
-* Model_name: InceptionV3 + Gloval Average Pooling 2D+  Dense layer
-* AUC score trên tập validation = 0.8140906680805939
+* Model_name: InceptionV3 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
+* AUC score recorded in the validation set: 0.8140906680805939
 
 ![image](https://user-images.githubusercontent.com/84164707/118350544-8f07e500-b581-11eb-930b-1c1aa2b0e1d2.png)
 
 ### 3.4. Model 4: ResNet50
-* Model_name: ResNet50 + Gloval Average Pooling 2D+  Dense layer
-* AUC score trên tập validation = 0.7783669141039237
+* Model_name: ResNet50 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
+* AUC score recorded in the validation set: 0.7783669141039237
 
 ![image](https://user-images.githubusercontent.com/84164707/118350581-c70f2800-b581-11eb-876c-cea9dcbc93ff.png)
 
 ### 3.5. Model 5: AlexNet (modified)
-* Model_name: ResNet50 ++ Gloval Average Pooling 2D+  Dense layer
-* AUC score trên tập validation = 0.727487628137151
+* Model_name: ResNet50 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
+* AUC score recorded in the validation set: 0.727487628137151
 
 ![image](https://user-images.githubusercontent.com/84164707/118350612-e1e19c80-b581-11eb-8a8c-ec35a088ef39.png)
 
 
-### Tìm weights cụ thể cho từng model:
-- Với mục tiêu áp dụng kĩ thuật Ensemble Blending, chúng em đã sử dụng library Deep Stack, cụ thể là kết hợp các model với hàm  DirichletEnsemble() để tìm ra weights cụ thể cho từng model là: 0.8938 cho model 1 (VGG16), 0.0403 cho model 2 (EfficientNetB0), 0.0126 cho model 3 (InceptionV3), 0.0029 cho model 4 (ResNet50) và 0.0504 cho model 5 (AlexNet)
+### Calculating weights for each model (in the ensemble phase):
+- With the final aim of utilizing average-ensemble technique, we had chose to use the Deep Stack library, specifically using function DirichletEnsemble() to calculate the optimal weight for each model: 0.8938 for model 1 (VGG16), 0.0403 for model 2 (EfficientNetB0), 0.0126 for model 3 (InceptionV3), 0.0029 for model 4 (ResNet50) and 0.0504 for model 5 (AlexNet)
 
 (![image](https://user-images.githubusercontent.com/68393604/118476868-3fb7e500-b738-11eb-983d-983ede716a3f.png)
 
---> chú ý: đây là những thông số thu được trước khi bắt đầu thêm vào lớp preprocessing input cho riêng từng model (thay vì dựa vào ImageDataGenerator) và thêm vào các lớp Dense layers sau lớp Global Average Pooling cho từng model (để giảm các feature maps dần dần xuống cho model có performance tốt hơn, học từ dự án của Thịnh và Nga).
+--> attention: these are all old statistics before we started adding the preprocessing layer to our deep learning models (instead of relying on ImageDataGenerator function alone) and added more Dense layers after the Global Average Pooling layer.
+
 ## 4. Tools to use
-* Tensorflow và Keras
+* Tensorflow and Keras
 * Tensorflow-addons
 * Python
-* matplotlib
-* scikit-learn
-* streamlit
+* Matplotlib-pyplot
+* Scikit-learn
+* Streamlit
 
 ![image](https://user-images.githubusercontent.com/84164707/118298422-a4412d00-b509-11eb-8abd-4f0441a00c88.png)
 ![image](https://user-images.githubusercontent.com/84164707/118298436-a86d4a80-b509-11eb-9b66-792f926e37bd.png)
 
-## 5. Kết quả:
-- Sau khi submit để tập test trên Kaggle, chúng em thấy được điểm của chúng em trên tập test là 0.8070, không phải là 1 số điểm quá cao. Nguyên ngân có lẽ là do bọn em lần này chưa thực sự tối ưu hóa các model và dữ liệu (chọn lọc model chưa tốt, như có thể thấy là model VGG16 chiếm tỉ trọng rất lớn trong việc quyết định điểm ROC-AUC score final so với các model khác; chưa thêm các lớp Dense layers phía sau lớp Global Average Pooling; chưa có lớp Preprocessing input cụ thể cho từng model; đồng thời chưa tận dụng được file metadata có sẵn). Đồng thời nhóm cũng chưa train dữ liệu trên toàn bộ tập dataset nên tỉ lệ bị biased là rất cao.
+## 5. Final result in the test set (provided by the competition):
+- After submitting the predictions for the test set on Kaggle, we received a score of 0.8070, which is not an optimal score. We had suspected this low score came from the fact that we had not optimize our models as well as our training/validation set. Specifically, we needed to reselect our models (as you can see the VGG16 model accounted for the major part of the final weight), and find ways to utilize the entire given training dataset to achieve better accuracy.
 
-## 6. Deploy trên web app bằng Streamlit:
-- Bọn em quyết định dùng streamlit để tạo 1 web app cơ bản classify ảnh bọn em đưa vào, chi tiết về code ở trên file Deploy. Ở đây mặc dù nhóm dùng cả 5 model để ensemble kết hợp lại để cho kết quả cuối cùng, thế nhưng nhóm chúng em nghĩ rằng chỉ cần áp dụng VGG16 vào là đủ (vì VGG16 có tỉ lệ đúng rất cao và là thành phần quan trọng chiếm tỉ lệ cao nhất khi ensemble lại). Điều này có thể giúp chúng ta đảm bảo tốc độ chạy của mô hình thuật toán mà vẫn đảm bảo được khả năng dự đoán của model.
---> xem demo trên Youtube: https://youtu.be/vAQ9V3F0VTA
+## 6. Deploy web application by using Streamlit:
+- We decided to use the Streamlit framework to create a local-hosted, basic website that can load and predict one image at a time (details in the Deploy file). We only use one model (instead of 5) for deployment. This will help us ensure the speed of our website while still maintaining the accuracy of the final model 
 
-- Hướng dẫn sử dụng:
-  * Vì Streamlit chỉ demo được trên local host nên phải tải code về rồi chạy lại trong máy
-  * Warning: nhớ cài đặt pydot, graphviz, pydotplus, streamlit đầy đủ vào enviroment để code chạy được. Đồng thời nhớ chèn đường link model trained của mình vô để code chạy được
-  * Sau khi đã chạy được web lên như google chrome rồi, thao tác như trong video phía trên : nhấn nút Browse File để chọn 1 file ảnh lên (nhớ 1 lần chỉ được chọn 1 tấm thôi, và tấm ảnh đó phải ở dạng jpeg hay jpg hay png) --> sau khi đã upload được lên thì nhấn nút Classify rồi để model chạy 1 lúc. Nếu muốn chọn lại bức khác thì nhớ nhấn nút xóa bức cũ đi rồi chọn lại tấm mới
-  * Nếu muốn thêm model thì chỉnh lại phần def load_trained_model() và def predict() lại
+--> see our demo video of our website on Youtube: https://youtu.be/vAQ9V3F0VTA
 
-## 7. Hướng phát triển:
-* Train trên toàn bộ dữ liệu ảnh, có thể sẽ chuyển qua file TFRecord ddeere tăng hiệu quả training lên
+## 7. Future directions:
+* Train trên toàn bộ dữ liệu ảnh, có thể sẽ chuyển qua file TFRecord để tăng hiệu quả training lên
 * Như đã nói ở trên, sẽ áp dụng lớp Preproccessing Input, thêm các lớp Dense layers phía sau
 * Áp dụng các phương pháp Image Segmentation + Object Detection để nâng cao khả năng xác định được các nốt ruồi (moles) trong ảnh
 * Phân tích các thang đo ROC-AUC curve và confusion matrix để xác định được threshold nên dùng trong việc xác định mole này là bening hay malignant
