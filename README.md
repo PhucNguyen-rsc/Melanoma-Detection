@@ -1,6 +1,6 @@
 # Melanoma-Detection
-## 1. Tóm tắt chung 
-### 1.1 Tóm tắt đề tài
+## 1. Overview:
+### 1.1 Project Summary
 * Create a final product that can detect whether the given mole image is cancerous (melanoma disease) or not.
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
   + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
