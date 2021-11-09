@@ -7,7 +7,7 @@
   + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
   + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
   + Early detection is critical!"
-### 1.2 Link các sản phẩm có liên quan:
+### 1.2 Relavent products mentioned:
   * Link trained models based on the given dataset (scroll down to see): https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
   * Link of our Skype Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
   * Link the skin cancer Kaggle dataset that we'd used: https://www.kaggle.com/c/siim-isic-melanoma-classification/data
