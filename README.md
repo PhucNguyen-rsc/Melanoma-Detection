@@ -1,12 +1,12 @@
-# Melanoma-Detection
+# Melanoma Detection
 ## 1. Overview:
 ### 1.1 Project Summary
 * Create a final product that can detect whether the given mole image is cancerous (melanoma disease) or not.
 * "Skin cancer is a common disease that affect a big amount of peoples. Some facts about skin cancer:
-  + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
-  + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
-  + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
-  + Early detection is critical!"
+    + Every year there are more new cases of skin cancer than the combined incidence of cancers of the breast, prostate, lung and colon.
+    + An estimated 87,110 new cases of invasive melanoma will be diagnosed in the U.S. in 2017.
+    + The estimated 5-year survival rate for patients whose melanoma is detected early is about 98 percent in the U.S. The survival rate falls to 62 percent when the disease reaches the lymph nodes, and 18 percent when the disease metastasizes to distant organs.
+    + Early detection is critical!"
 ### 1.2 Relavent products mentioned:
   * Link trained models based on the given dataset (scroll down to see): https://drive.google.com/drive/folders/10aTvRsL1wrWjqRwsug9JHSLFOfnnqE-U?usp=sharing
   * Link of our Skype Presentation: https://drive.google.com/drive/folders/1HqhK64tP170rSeZNuFCr77HMard6Y4GJ?usp=sharing
