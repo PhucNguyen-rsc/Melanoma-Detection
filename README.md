@@ -28,10 +28,10 @@
 
 ### 2.2. Data
 * Sample:
-  * benign mole
+    * benign mole
   
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
-  * malignant mole
+    * malignant mole
   
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 
@@ -51,11 +51,11 @@
 
 ### 2.3. Reasons why we opt out for those CNN models:
 * CNN models that we used as feature extractors:
-  + VGG16
-  + EfficientNetB0
-  + InceptionV3
-  + ResNet50
-  + AlexNet (we recreated this model based on the instructions in one of the Medium blogs, since Alexnet is one of the first-generation models and is not integrated into the native Keras Applications framework)
+    + VGG16
+    + EfficientNetB0
+    + InceptionV3
+    + ResNet50
+    + AlexNet (we recreated this model based on the instructions in one of the Medium blogs, since Alexnet is one of the first-generation models and is not integrated into the native Keras Applications framework)
 * Lý do: Based on some of the research papers about melanoma-detection that we have read, those models are regularly used in research and have been proved to give out consistent good scores)
 ### 2.4. Preprocessing the input data:
 * Since the dataset's ratio is highly imbalanced, we had randomly selected 4000 benign mole images and 500 malignant (cancerous) mole images as our training set; we then picked randomly another 500 benign mole images + 80 malignant images as our validation set. Those datasets would be used for our training session.
@@ -71,12 +71,12 @@
 
 ## 3. Pre-trained model
 * Summary: we build our deep learning models based on the following architecture: Feature extractor model (imported from Keras Applications) + customized Global Average Pooling + customized Dense layer(Prediction layer, which only has 1 node). We also applied other traning techniques to improve the models' learning process as well as their accuracy:
-  + Calculating class weights (computed from sklearn) to apply to each individual class while traning {0:0.5,
+    + Calculating class weights (computed from sklearn) to apply to each individual class while traning {0:0.5,
                                                                                                        1:4.0)
-  + Using Data Augmentation in the preparation process to help the models generalize better.
-  + Using Sigmoid Focal Crossentropy as a loss function(available to use in tensorflow-addons). This loss function has been known for being extremely effective in handling imbalanced dataset, in parts because this loss function force our models to learn different patterns in the minority class.
-  + Using ROC-AUC as our main metric, since this is a reliable metric used for binary classification problems that have imabalanced dataset.
-  + Besides, while training, we also applied workers, use_multiprocessing to speed up the training process.
+    + Using Data Augmentation in the preparation process to help the models generalize better.
+    + Using Sigmoid Focal Crossentropy as a loss function(available to use in tensorflow-addons). This loss function has been known for being extremely effective in handling imbalanced dataset, in parts because this loss function force our models to learn different patterns in the minority class.
+    + Using ROC-AUC as our main metric, since this is a reliable metric used for binary classification problems that have imabalanced dataset.
+    + Besides, while training, we also applied workers, use_multiprocessing to speed up the training process.
  ![image](https://user-images.githubusercontent.com/84164707/118348362-f028bc00-b573-11eb-9bf9-7c0e7b02d047.png)
 
 ### 3.1. Model 1: VGG16
