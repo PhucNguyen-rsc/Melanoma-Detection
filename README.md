@@ -1,4 +1,8 @@
 # Melanoma Detection
+## Table of contents:
+* [Overview](#1.overview)
+    * [Project Summary](#1.1project_summary)
+
 ## 1. Overview:
 ### 1.1 Project Summary
 * Create a final product that can detect whether the given mole image is cancerous (melanoma disease) or not.
