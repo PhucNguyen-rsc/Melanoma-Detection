@@ -1,9 +1,25 @@
 # Melanoma Detection
 ## Table of contents:
-1. [Overview](#1.overview)
-    * [Project Summary](#1.1-project-summary)
-    * [Relavent products mentioned](#1.2-relevant-products-mentioned)
-    * [New changes](#1.3-new-changes-compared-to-our-last-time-presentation)
+1. [Overview](#1-overview)
+    * [Project Summary](#11-project-summary)
+    * [Relavent products mentioned](#12-relevant-products-mentioned)
+    * [New changes](#13-new-changes-compared-to-our-last-time-presentation)
+2. [General idea](#2-general-idea)
+    * [Analysis based on TEFPA](#21-analysis-based-on-the-tefpa-model)
+    * [Data](#22-data)
+    * [Why we choose these CNN models?](#23-reasons-why-we-opt-out-for-those-cnn-models)
+    * [Preprocess the input data](#24-preprocessing-the-input-data)
+3. [Pretrained models](#3-pre-trained-model)
+    * [Model 1: VGG16](#31-model-1-vgg16)
+    * [Model 2: EfficientNetB0](#32-model-2-efficientnetb0)
+    * [Model 3: InceptionV3](#33-model-3-inceptionv3)
+    * [Model 4: ResNet50](#34-model-4-resnet50)
+    * [Model 5: AlexNet (customized)](#35-model-5-alexnet-customized)
+    * [Calculating weights for each model (in the ensemble phase)](#calculating-weights-for-each-model-in-the-ensemble-phase)
+4. [Tools to use](#4-tools-to-use)
+5. [Final result in the test set](#5-final-result-in-the-test-set-provided-by-the-competition)
+6. [Deploy web application](#6-deploy-web-application-by-using-streamlit)
+7. [Future directions](#7-future-directions)
 
 ## 1. Overview:
 ### 1.1 Project Summary
@@ -34,7 +50,6 @@
 
 ### 2.2. Data
 Sample:
-
    * benign mole
   
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
@@ -111,7 +126,7 @@ Sample:
 
 ![image](https://user-images.githubusercontent.com/84164707/118350581-c70f2800-b581-11eb-876c-cea9dcbc93ff.png)
 
-### 3.5. Model 5: AlexNet (modified)
+### 3.5. Model 5: AlexNet (customized)
 * Model_name: ResNet50 (feature extractor only) + customized Gloval Average Pooling 2D + customized Dense layer
 * AUC score recorded in the validation set: 0.727487628137151
 
