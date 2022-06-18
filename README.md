@@ -33,11 +33,13 @@
 * Algorithm: applied and retrained all deep learning pretrained models (AlexNet, VGG16, EfficientNetB0, InceptionV3, ResNet50) based on Keras/Tensorflow framework. After that, we apply the weighted average ensemble technique to intergrate all those 5 models to create a final "parent" model. We utilized the Deep Stack library to find the specific weight for each given model. 
 
 ### 2.2. Data
-* Sample:
-    * benign mole
+Sample:
+
+   * benign mole
   
 ![image](https://user-images.githubusercontent.com/84164707/118297028-d487cc00-b507-11eb-903b-f185bf93d29d.png)
-    * malignant mole
+
+   * malignant mole
   
 ![image](https://user-images.githubusercontent.com/84164707/118296814-92f72100-b507-11eb-8578-593fed63c3ef.png)
 
