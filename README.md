@@ -136,9 +136,9 @@ Sample:
 ### Calculating weights for each model (in the ensemble phase):
 - With the final aim of utilizing average-ensemble technique, we had chose to use the Deep Stack library, specifically using function DirichletEnsemble() to calculate the optimal weight for each model: 0.8938 for model 1 (VGG16), 0.0403 for model 2 (EfficientNetB0), 0.0126 for model 3 (InceptionV3), 0.0029 for model 4 (ResNet50) and 0.0504 for model 5 (AlexNet)
 
-(![image](https://user-images.githubusercontent.com/68393604/118476868-3fb7e500-b738-11eb-983d-983ede716a3f.png)
+![image](https://user-images.githubusercontent.com/68393604/118476868-3fb7e500-b738-11eb-983d-983ede716a3f.png)
 
---> attention: these are all old statistics before we started adding the preprocessing layer to our deep learning models (instead of relying on ImageDataGenerator function alone) and added more Dense layers after the Global Average Pooling layer.
+--> notice: these are all old statistics before we started adding the preprocessing layer to our deep learning models (instead of relying on ImageDataGenerator function alone) and added more Dense layers after the Global Average Pooling layer.
 
 ## 4. Tools to use
 * Tensorflow and Keras
