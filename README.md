@@ -1,4 +1,8 @@
 # Melanoma Detection
+
+## Team members/ Contributors:
+- [Nguyen Hoang Phuc](https://github.com/PhucNguyen-rsc)
+
 ## Table of contents:
 1. [Overview](#1-overview)
     * [Project Summary](#11-project-summary)
